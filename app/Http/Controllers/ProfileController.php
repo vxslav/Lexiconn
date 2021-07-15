@@ -37,7 +37,26 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validate_data = $request->validate([
+                'age'           => 'required|date|before:-16 years',
+                'address'       => 'required|string',
+                'education'     => 'required|string',
+                'job'           => 'required|string',
+                'description'   => 'required|string',
+                'hobbies'       => 'string',
+                'movies'        => 'string',
+                'music'         => 'string',
+                'likes'         => 'string',
+                'dislikes'      => 'string',
+                'goals'         => 'string',
+                'dreams'        => 'string',
+                'faq'           => 'string'
+
+        ]);
+
         $profile_data = new Profile;
+
 
 //        $profile_data->name        = Auth::user()->name;
 //        $profile_data->email       = Auth::user()->email;
@@ -76,34 +95,56 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(Profile $profile)
+    public function edit(int $id)
     {
-        //
+        $profile = Profile::find($id);
+        return view('update-profile', compact($profile));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, int $id)
     {
-        //
+        $profile_data = Profile::find($id);
+
+        $profile_data->user_id     = Auth::user()->id;
+        $profile_data->age         = $request->input()->age;
+        $profile_data->address     = $request->input()->address;
+        $profile_data->education   = $request->input()->education;
+        $profile_data->job         = $request->input()->job;
+        $profile_data->description = $request->input()->description;
+        $profile_data->hobbies     = $request->input()->hobbies;
+        $profile_data->movies      = $request->input()->movies;
+        $profile_data->music       = $request->input()->music;
+        $profile_data->likes       = $request->input()->likes;
+        $profile_data->dislikes    = $request->input()->dislikes;
+        $profile_data->goals       = $request->input()->goals;
+        $profile_data->dreams      = $request->input()->dreams;
+        $profile_data->faq         = $request->input()->faq;
+
+        $profile_data->save();
+
+        return redirect('/dashboard')->with('message', 'You have successfully updated your profile!');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param Profile int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy(Profile $profile)
+    public function destroy($id)
     {
-        //
+        Profile::destroy($id);
+        return redirect('dashboard')->with('message', 'Profile successfully deleted!');
     }
 }

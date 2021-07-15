@@ -14732,11 +14732,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
-Vue.component('alert-success', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/AlertSuccess'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()).default);
-var app = new Vue({
-  el: '#app'
-});
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js"); // Vue.component('alert-success', require('./components/AlertSuccess').default);
+// const app = new Vue({
+//     el: '#app',
+// });
 
 /***/ }),
 

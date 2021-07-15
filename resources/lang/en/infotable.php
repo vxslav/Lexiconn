@@ -19,6 +19,7 @@ return [
    'faq'         => 'FAQ',
 
     'button_create'  => 'Complete your user account',
+    'button_edit'    => 'Edit your profile information',
     'button_delete'  => 'This action will destroy your user information, while keeping your account active',
     'button_destroy' => 'This action will destroy your complete user account',
 ];
