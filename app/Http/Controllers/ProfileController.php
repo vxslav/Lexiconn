@@ -3,32 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
+
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-       return view('update-profile', ['header' => 'Update Profile', 'slot' => '']);
-//
+            $profile_data = DB::table('profiles')->where('user_id', '=', Auth::user()->id)->first();
+            return view('profile', compact('profile_data'), ['header' => 'My Profile', 'slot' => '']);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
-    }
+        $user = Auth::user()->id;
+        $profile = new Profile;
+        $profile->user_id = $user;
 
+        return view('create-profile', compact('profile', 'user'), ['header' => 'Create Profile', 'slot' => '']);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -38,20 +44,20 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
 
-        $validate_data = $request->validate([
-                'age'           => 'required|date|before:-16 years',
-                'address'       => 'required|string',
-                'education'     => 'required|string',
-                'job'           => 'required|string',
-                'description'   => 'required|string',
-                'hobbies'       => 'string',
-                'movies'        => 'string',
-                'music'         => 'string',
-                'likes'         => 'string',
-                'dislikes'      => 'string',
-                'goals'         => 'string',
-                'dreams'        => 'string',
-                'faq'           => 'string'
+        $this->validate($request, [
+            'age'           => 'required|date|before:-16 years',
+            'address'       => 'required|string',
+            'education'     => 'required|string',
+            'job'           => 'required|string',
+            'description'   => 'required|string',
+            'hobbies'       => 'string',
+            'movies'        => 'string',
+            'music'         => 'string',
+            'likes'         => 'string',
+            'dislikes'      => 'string',
+            'goals'         => 'string',
+            'dreams'        => 'string',
+            'faq'           => 'string'
 
         ]);
 
@@ -77,6 +83,7 @@ class ProfileController extends Controller
 
 
         $profile_data->save();
+
         return redirect('/dashboard')->with('message', 'You have successfully created your profile!');
 
     }
@@ -100,8 +107,9 @@ class ProfileController extends Controller
      */
     public function edit(int $id)
     {
-        $profile = Profile::find($id);
-        return view('update-profile', compact($profile));
+            $profile = Profile::find($id);
+            return view('update-profile', ['header' => 'Update Profile', 'slot' => ''], compact('profile'));
+
     }
 
     /**
@@ -113,24 +121,43 @@ class ProfileController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $profile_data = Profile::find($id);
 
-        $profile_data->user_id     = Auth::user()->id;
-        $profile_data->age         = $request->input()->age;
-        $profile_data->address     = $request->input()->address;
-        $profile_data->education   = $request->input()->education;
-        $profile_data->job         = $request->input()->job;
-        $profile_data->description = $request->input()->description;
-        $profile_data->hobbies     = $request->input()->hobbies;
-        $profile_data->movies      = $request->input()->movies;
-        $profile_data->music       = $request->input()->music;
-        $profile_data->likes       = $request->input()->likes;
-        $profile_data->dislikes    = $request->input()->dislikes;
-        $profile_data->goals       = $request->input()->goals;
-        $profile_data->dreams      = $request->input()->dreams;
-        $profile_data->faq         = $request->input()->faq;
+        $this->validate($request, [
+            'age'           => 'required|date|before:-16 years',
+            'address'       => 'required|string',
+            'education'     => 'required|string',
+            'job'           => 'required|string',
+            'description'   => 'required|string',
+            'hobbies'       => 'required|string',
+            'movies'        => 'required|string',
+            'music'         => 'required|string',
+            'likes'         => 'required|string',
+            'dislikes'      => 'required|string',
+            'goals'         => 'required|string',
+            'dreams'        => 'required|string',
+            'faq'           => 'required|string'
 
-        $profile_data->save();
+        ]);
+//        $profile = Profile::find($id);
+    $profile = Profile::where('id', '=', $id)->first();
+
+
+//        $profile_data->user_id     = Auth::user()->id;
+        $profile->age         = $request->input('age');
+        $profile->address     = $request->input('address');
+        $profile->education   = $request->input('education');
+        $profile->job         = $request->input('job');
+        $profile->description = $request->input('description');
+        $profile->hobbies     = $request->input('hobbies');
+        $profile->movies      = $request->input('movies');
+        $profile->music       = $request->input('music');
+        $profile->likes       = $request->input('likes');
+        $profile->dislikes    = $request->input('dislikes');
+        $profile->goals       = $request->input('goals');
+        $profile->dreams      = $request->input('dreams');
+        $profile->faq         = $request->input('faq');
+
+    $profile->save();
 
         return redirect('/dashboard')->with('message', 'You have successfully updated your profile!');
 

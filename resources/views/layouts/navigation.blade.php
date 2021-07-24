@@ -21,11 +21,19 @@
                         {{ __('Browse Profiles') }}
                     </x-nav-link>
                 </div>
+                @if(empty(Auth::user()->profile))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('create-profile')" :active="request()->routeIs('create-profile')">
+                            {{ __('Create Profile') }}
+                        </x-nav-link>
+                    </div>
+                @else
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('update-profile')" :active="request()->routeIs('update-profile')">
-                        {{ __('Update Profile') }}
+                    <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
+                        {{ __('My Profile') }}
                     </x-nav-link>
                 </div>
+                    @endif
             </div>
 
             <!-- Settings Dropdown -->
@@ -82,15 +90,23 @@
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('my-profile')" :active="request()->routeIs('my-profile')">
+            <x-responsive-nav-link :href="route('browse-profiles')" :active="request()->routeIs('browse-profiles')">
+                {{ __('Browse Profiles') }}
+            </x-responsive-nav-link>
+        </div>
+        @if(empty(Auth::user()->profile))
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('create-profile')" :active="request()->routeIs('create-profile')">
+                {{ __('Create Profile') }}
+            </x-responsive-nav-link>
+        </div>
+        @else
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
                 {{ __('My Profile') }}
             </x-responsive-nav-link>
         </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('update-profile')" :active="request()->routeIs('update-profile')">
-                {{ __('Update Profile') }}
-            </x-responsive-nav-link>
-        </div>
+        @endif
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
