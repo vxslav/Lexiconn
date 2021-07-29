@@ -20,6 +20,8 @@ class UserController extends Controller
         $users = User::orderBy('id', 'desc')->get();
         $profiles = Profile::all();
 
+
+
         return view('users', compact('users', 'profiles'), ['header' => 'Browse Profiles', 'slot' => '']);
 //
     }
@@ -49,11 +51,13 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $profile_data = Profile::where('user_id', '=', $id)->first();
+        return view('view-profile', ['header' => 'Update Profile', 'slot' => ''], compact('profile_data', 'user'));
     }
 
     /**

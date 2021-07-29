@@ -91,12 +91,12 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Profile $profile)
+    public function show(int $id)
     {
-        //
+       //
     }
 
     /**

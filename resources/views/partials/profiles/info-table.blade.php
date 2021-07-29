@@ -16,7 +16,7 @@
                 <td class="p-4 text-gray-600 hover:text-indigo-600">{{ $user->profile->job ?? ''}}</td>
                 <td class="p-4">
                     <button class="bg-purple-300 hover:bg-purple-500 text-white font-bold py-2 px-3 rounded">
-                        View Profile
+                        <a href="{{ route('view-profile', $user->id) }}">View Profile</a>
                     </button>
                 </td>
             </tr>
