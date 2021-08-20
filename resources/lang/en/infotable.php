@@ -22,4 +22,10 @@ return [
     'button_edit'    => 'Edit your profile information',
     'button_delete'  => 'This action will destroy your user information, while keeping your account active',
     'button_destroy' => 'This action will destroy your complete user account',
+
+    'heading'    => 'Heading',
+    'text'       => 'Main content',
+    'date'       => 'Created at',
+    'author'     => 'Аuthor',
+
 ];

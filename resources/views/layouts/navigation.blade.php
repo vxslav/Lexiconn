@@ -34,6 +34,29 @@
                     </x-nav-link>
                 </div>
                     @endif
+                <!--Articles Links-->
+                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
+                        {{ __('Browse Articles') }}
+                    </x-nav-link>
+                </div>   
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('articles.create')" :active="request()->routeIs('articles.create')">
+                        {{ __('Create Article') }}
+                    </x-nav-link>
+                </div>   
+                <!-- Movie Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('movies.index')" :active="request()->routeIs('movies.index')">
+                        {{ __('Movies') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('tv.index')" :active="request()->routeIs('tv.index')">
+                        {{ __('TV Shows') }}
+                    </x-nav-link>
+                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -107,6 +130,28 @@
             </x-responsive-nav-link>
         </div>
         @endif
+        <!--Article Links-->
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
+                {{ __('Browse Articles') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('articles.create')" :active="request()->routeIs('articles.create')">
+                {{ __('Create Article') }}
+            </x-responsive-nav-link>
+        </div>
+        <!-- Movie and TV Links -->
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('movies.index')" :active="request()->routeIs('movies.index')">
+                {{ __('Movies') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('tv.index')" :active="request()->routeIs('tv.index')">
+                {{ __('TV Shows') }}
+            </x-responsive-nav-link>
+        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
